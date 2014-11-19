@@ -1,0 +1,63 @@
+---
+title: "rmarkdown knitr example"
+author: "Daniel Chen"
+date: "11/16/2014"
+output:
+  html_document:
+    keep_md: yes
+    number_sections: yes
+    toc: yes
+---
+
+# header 1
+regular text
+
+*italic*
+_italic_
+
+**bold**
+
+  - bullet 1
+  - bullet 2
+    - nested bullet
+    
+  1. item 1
+  1. item 2
+  1. item 3
+
+## header 2
+
+### header 3
+
+
+```{r}
+analyze <- function(data_frame_to_analyze){
+  avg_day_inflammation <- apply(data_frame_to_analyze, 2, mean)
+  sd_day_inflammation <- apply(data_frame_to_analyze, 2, sd)
+  min_day_inflammation <- apply(data_frame_to_analyze, 2, min)
+  max_day_inflammation <- apply(data_frame_to_analyze, 2, max)
+
+  plot(avg_day_inflammation)
+  plot(sd_day_inflammation)
+  plot(min_day_inflammation)
+  plot(max_day_inflammation)
+}
+```
+
+```{r}
+analyze_file <- function(file_name){
+  data <- read.csv(file = file_name, header = FALSE)
+  analyze(data)
+}
+```
+
+```{r}
+list_of_inflam_files <- list.files(path = './',
+                                   pattern = 'inflammation')
+list_of_inflam_files
+for(file_name in list_of_inflam_files){
+  analyze_file(file_name)
+}
+```
+
+

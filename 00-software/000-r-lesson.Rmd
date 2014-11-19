@@ -1,0 +1,134 @@
+---
+title: "000-r-lesson"
+author: "Daniel Chen"
+date: "11/16/2014"
+output:
+  html_document:
+    keep_md: yes
+    number_sections: yes
+    toc: yes
+---
+
+# conditionals and making decisions
+```{r}
+num <- 37
+if(num > 100){
+  print("greater")
+} else{
+    print("not greater")
+}
+```
+
+## if/else if/else
+```{r}
+num <- 37
+if(num > 40){
+  print("greater")
+} else if (num < 40){
+  print("less than")
+} else{
+    print("not greater")
+}
+```
+
+## Problem 1
+
+### 50
+```{r}
+# write a function, that takes in a number, and returns TRUE
+# if it is less than 50
+# returns FALSE if >= 50
+cut_50 <- function(number){
+  if(number < 50){
+    print(TRUE)
+  } else{
+    print(FALSE)
+  }
+}
+cut_50(0)
+cut_50(50)
+cut_50(100)
+```
+
+### 50 with neg
+```{r}
+# write a function that takes in a number, returns "neg"
+# if < 0
+# returns "SMALL" if >= 0 and < 50
+# returns "big" if >= 50
+cut_50_neg <- function(number){
+  if(number < 0){
+    print("neg")
+  } else if (number < 50){
+    print("SMALL")
+  } else {
+    print("big")
+  }
+}
+
+cut_50_neg(-1)
+cut_50_neg(0)
+cut_50_neg(50)
+```
+
+# Plot
+## ggplot2
+```{r}
+library(ggplot2)
+View(diamonds)
+head(diamonds)
+```
+
+### base histogram
+```{r}
+hist(diamonds$carat, main = "Carat Histogram",
+      xlab = "Carat")
+```
+
+```{r}
+plot(price ~ carat, data = diamonds)
+```
+
+```{r}
+boxplot(diamonds$carat)
+```
+
+## ggplot
+```{r}
+ggplot(data = diamonds) + geom_histogram(aes(x = carat))
+```
+
+```{r}
+ggplot(data = diamonds) + geom_density(aes(x = carat))
+```
+
+```{r}
+ggplot(data = diamonds, aes(x = carat, y = price)) + geom_point()
+```
+
+
+```{r}
+# saving plots to varibles
+g <- ggplot(data = diamonds, aes(x = carat, y = price)) + geom_point(aes(color = color))
+g
+```
+
+```{r}
+ggplot(diamonds, aes(y = carat, x = 1)) + geom_boxplot()
+```
+
+```{r}
+ggplot(diamonds, aes(y = carat, x = cut)) + geom_boxplot()
+```
+
+```{r}
+ggplot(diamonds, aes(y = carat, x = cut)) + geom_violin() + geom_point()
+```
+
+```{r}
+library(ggthemes)
+g <- ggplot(diamonds, aes(x = carat, y = price)) + geom_point(aes(color = color))
+g + theme_economist()
+g
+```
+
