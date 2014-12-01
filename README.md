@@ -52,4 +52,4 @@ other folders.
 - 03-day-2-ggplot.Rmd: ggplot2 overview, and we plot a scatter plot matrix
   that contain 5 levels of data
 
-- 03-dat-2-ebola.Rmd: cleaning and plotting the ebola dataset
+- 04-day-2-ebola.Rmd: cleaning and plotting the ebola dataset
