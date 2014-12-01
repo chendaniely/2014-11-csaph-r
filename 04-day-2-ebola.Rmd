@@ -1,0 +1,122 @@
+---
+title: "ebola"
+author: "Daniel Chen"
+date: "11/22/2014"
+output: html_document
+---
+
+```{r}
+library(RCurl)
+library(reshape2)
+library(ggplot2)
+```
+
+```{r}
+url <- "https://raw.githubusercontent.com/cmrivers/ebola/master/country_timeseries.csv"
+
+data <- getURL(url = url, ssl.verifypeer = FALSE)
+ebola_data <- read.csv(textConnection(data))
+```
+
+<!-- this is a comment in HTML, and you use this to put comments in a markdown document -->
+
+```{r}
+# droping the date column by name
+ebola_no_dates <- ebola_data[, !names(ebola_data) %in% c("Date")]
+```
+
+```{r}
+# for loop example
+people <- c("daniel", "niels", "thomas", "frank", "ryan", "flo")
+print("daniel")
+print("niels")
+print("thomas")
+for(name in people){
+    print(name)
+    print(3 + 5)
+}
+```
+
+```{r}
+# shift dates so they are all relative to each other
+# build a series of 0... latest dat in the dataset
+day <- c(0:max(ebola_no_dates$Day))
+
+# we'll add updates on each day we have data for each country
+ebola_merge <- data.frame(day)
+head(ebola_merge)
+
+# iterate over columns (i.e, for each country we will do somehting)
+# country_count <- 3
+for(country_count in 2:ncol(ebola_no_dates)){
+    ebola_subset <- ebola_no_dates[, c(1, country_count)]
+    # dataset is snapshots at day of reporting
+    # with NAs representing "no change/ no new data"
+    # ignore those dates with NA
+    ebola_subset_no_na <- na.omit(ebola_subset)
+    
+    # rescale all series so day 0 is the first
+    # reported case/death for that country
+    ebola_subset_no_na$adjust_day <- ebola_subset_no_na$Day - min(ebola_subset_no_na$Day)
+
+    ebola_merge <- merge(x = ebola_merge, 
+            y = ebola_subset_no_na[, names(ebola_subset_no_na) != "Day"], 
+            by.x = "day", 
+            by.y = "adjust_day", 
+            all.x = TRUE)
+}
+head(ebola_merge)
+```
+
+```{r}
+# assign day to row.names before tranpose
+row.names(ebola_merge) <- ebola_merge$day
+
+# drop the day column, because it is the row.name
+ebola_merge <- ebola_merge[, names(ebola_merge) != "day"]
+head(ebola_merge)
+```
+
+```{r}
+# we have everything ready for a transpose
+ebola_t <- as.data.frame(t(as.matrix(ebola_merge)))
+```
+
+```{r}
+type_country_split <- colsplit(string = row.names(ebola_t), 
+         pattern = "_", 
+         names = c("type", "country"))
+
+ebola_type_country <- cbind(type_country_split, ebola_t)
+row.names(ebola_type_country) <- NULL
+```
+
+```{r}
+ebola_melt <- melt(ebola_type_country)
+head(ebola_melt)
+```
+
+```{r}
+names(ebola_melt) <- c("type", "country", "day", "count")
+head(ebola_melt)
+```
+
+```{r}
+# 2 more ways to drop NA values, they are both the same
+# we need to drop the NA values for the line graph to properly connect the points of the line
+ebola_plot <- ebola_melt[!is.na(ebola_melt$count), ]
+ebola_plot <- na.omit(ebola_melt)
+```
+
+```{r}
+# PLOTS!
+ggplot(data = ebola_plot[ebola_plot$country %in% c("Guinea", "Liberia"), ], aes(x = day, y = count, group = country,
+                              color = country)) + 
+    facet_wrap(~ type) + geom_line() + geom_point()
+```
+
+```{r}
+# if you want to fit regression models, the glm() function has all of the generalized linear models
+# glm()
+```
+
