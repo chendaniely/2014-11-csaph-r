@@ -10,6 +10,8 @@ Ebola data comes from Caitlin Rivers's [repository](https://github.com/cmrivers/
 
 # Viewing the materials 
 
+The etherpad can be found [here](https://etherpad.mozilla.org/2014-11-csaph-r-workshop).  beginning with line 17, there are links to other R references
+
 # Day 1 
 
 Day 1 material can be found in the `00-software` folder.  The files
