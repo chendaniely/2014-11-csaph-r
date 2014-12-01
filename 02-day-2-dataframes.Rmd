@@ -1,0 +1,151 @@
+---
+title: "01-day2-dataframes"
+author: "Daniel Chen"
+date: "11/22/2014"
+output:
+  word_document: default
+  html_document:
+    keep_md: yes
+---
+^ that is called a YAML header
+
+# Header 1
+
+## headder 2
+
+### header 3
+
+* bullet
+- bullet
+
+> this is a blockcomment
+1. number 1
+13. number 2
+
+*italic*, _italic_
+
+**bold**, __bold__
+
+9
+
+```{r}
+# create a dataframe by hand
+animal <- c("turtle", "giraffe", "penguins", "dog")
+feels <- c("slow", "tall", "none", "happy")
+weight <- c(5, 500, 6, 12)
+```
+
+```{r}
+example_data<- data.frame(animal, feels, weight, stringsAsFactors = FALSE)
+exampleData <- data.frame(animal, feels, weight)
+example.data <- data.frame(animal, feels, weight)
+str(example_data)
+```
+
+```{r}
+##  There are a few mistakes in this hand crafted `data.frame`,
+##  can you spot and fix them? Don't hesitate to experiment!
+
+#  author_book <- data.frame(
+#     author_first=c("Charles", "Ernst", "Theodosius"),
+#     author_last=c(Darwin, Mayr, Dobzhansky),
+#     year=c(1942, 1970))
+
+
+author_book <- data.frame(
+    author_first=c("Charles", "Ernst", "Theodosius"),
+    author_last=c("Darwin", "Mayr", "Dobzhansky"),
+    year=c(1942, 1970, 1984))
+```
+
+```{r}
+## Can you predict the class for each of the columns in the following example?
+## Check your guesses using `str(country_climate)`. Are they what you expected?
+##  Why? why not?
+country_climate <- data.frame(
+    country=c("Canada", "Panama", "South Africa", "Australia"),
+    climate=c("cold", "hot", "temperate", "hot/temperate"),
+    temperature=c(10, 30, 18, "15"),
+    north_hemisphere=c(TRUE, TRUE, FALSE, "FALSE"),
+    has_kangaroo=c(FALSE, FALSE, FALSE, 1))
+```
+
+```{r}
+example_data
+class(example_data$animal)
+unique(example_data$animal)
+class(example_data[3])
+class(example_data$weight)
+
+example_data[, 3]
+example_data[3, ]
+example_data[3, 3]
+
+example_data[c(1:3), c(2, 3)]
+
+seq(from = 1, to = 100, by = 5)
+seq(1, 100, 5)
+```
+
+
+```{r}
+author_book
+author_book[3, 3] <- 2032
+author_book
+
+author_book[, 3] <- seq(2000, 4000, 1000)
+author_book
+```
+
+```{r}
+paste("daniel", "chen", sep = " ")
+author_book
+author_book$first_and_last_name <- paste(
+    author_book$author_first, 
+    author_book$author_last, 
+    sep = " ")
+author_book
+
+survey <- read.csv(file = "surveys.csv")
+head(survey)
+survey$sum_dates <- survey$month + survey$day + survey$year
+survey
+head(survey)
+# negative index will drop that column (or row)
+# be carefule when you drop values by index becuase if you run the same command multiple times
+# it will keep dropping rows or columns
+head(survey[, -9]) # drop the 9th column
+
+```
+
+```{r}
+# working with vectors
+v1 <- c(1, 2, 3, 4, 5)
+v2 <- c(6, 7, 8, 9, 10)
+v1 + v2
+
+fname <- c("daniel", "niels", "ryan", "frank", "flo", "thomas")
+lname <- c("chen", "bantilan", "quan", "chen", "lee", "vo")
+paste(fname, lname, sep = " ")
+
+# convert the factors into characters
+author_book$author_first <- as.character(author_book$author_first)
+author_book$author_last <- as.character(author_book$author_last)
+
+vector_first_and_last_names <- paste(author_book$author_first, author_book$author_last, sep = " ")
+
+author_book$names_again <- vector_first_and_last_names
+author_book
+```
+
+```{r}
+author_book <- data.frame(
+    author_first=c("Charles", "Ernst", "Theodosius"),
+    author_last=c("Darwin", "Mayr", "Dobzhansky"),
+    year=c(1942, 1970, 1984), stringsAsFactors = FALSE)
+
+author_book
+another_author <- c('william', 'shakespeare', 5000)
+another_author
+rbind(author_book, another_author)
+```
