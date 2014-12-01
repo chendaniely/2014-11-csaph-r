@@ -18,6 +18,8 @@ ggplot(data = diamonds) + geom_histogram(aes(x = carat))
 ```
 
 ```{r}
+# scatter plot matrix with 5 levels of data
+head(diamonds)
 ggplot(data = diamonds, aes(x = carat, y = price)) + 
     geom_point(aes(color = cut)) + facet_grid(clarity~color)
 ```
