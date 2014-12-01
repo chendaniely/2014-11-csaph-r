@@ -12,17 +12,18 @@ Ebola data comes from Caitlin Rivers's [repository](https://github.com/cmrivers/
 
 The etherpad can be found [here](https://etherpad.mozilla.org/2014-11-csaph-r-workshop).  beginning with line 17, there are links to other R references
 
+If you are viewing the material on the github page, the files that end
+in `.md` will show you the code and output.  If you are viewing the
+files on your own computer, the `.html` files will open the material
+in a browser (you do not need internet if you have the material all
+downloaded to your computer).  If you want to open the files in
+`RStudio`, open the `.R` file or the `.Rmd` file
+
 # Day 1 
 
 Day 1 material can be found in the `00-software` folder.  The files
 that were covered in Day 1 are the files that begin with 3 digits
-(e.g. 000, 001, etc).  If you are viewing the material on the github
-page, the files that end in `.md` will show you the code and output.
-If you are viewing the files on #your own computer, the `.html` files
-will open the material in a browser (you do not need internet if you
-have the material all downloaded to your computer).  If you want to
-open the files in `RStudio`, open the `.R` file or the `.Rmd` file
-
+(e.g. 000, 001, etc).
 
 - 000-r-lesson.R: was the very intro to R and Rstudio (there is no
   `.md` or `.html` file for this)
