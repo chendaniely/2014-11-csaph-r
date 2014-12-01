@@ -1,0 +1,24 @@
+---
+title: "ggplot2"
+author: "Daniel Chen"
+date: "11/22/2014"
+output: html_document
+---
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+head(diamonds)
+```
+
+```{r}
+ggplot(data = diamonds) + geom_histogram(aes(x = carat))
+```
+
+```{r}
+ggplot(data = diamonds, aes(x = carat, y = price)) + 
+    geom_point(aes(color = cut)) + facet_grid(clarity~color)
+```
+
